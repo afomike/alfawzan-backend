@@ -2190,10 +2190,10 @@ This project is open-sourced software licensed under the [MIT license](LICENSE).
 
 ## Author
 
-**[Your Name]**
+**Osiako Afote Michael**
 
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourusername)
-- X (Twitter): [@yourhandle](https://x.com/yourhandle)
+- LinkedIn: linkin/afote-michael-208ba4238.
+- X (Twitter):https://x.com/Afomike20.
 
 ---
 
