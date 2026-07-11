@@ -1,0 +1,78 @@
+STAGE 1: Optimization od project
+Step 1: Optimize the project for deployment. 
+
+ run this command: composer install --no-dev --optimize-autoloader
+
+
+Step 2: Clear Configuration cache
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+
+Steep. 3: create a Fresh Migration (Empty DB if data exists)
+
+run php artisan migrate --force
+
+STAGE 2
+Select all the files inside your project directory (including .env).
+
+Right clik and choose Comprss. Name the archive laravel-core.zip.
+
+Separate your public folder: Enter the public folder of your project, select everything inside it right-click, and compress them into a separate file named laravel-public.zip
+
+
+STAGE 3:  Upload and Extract Via Cpanel
+Step 1- upload the core file zip
+In File Manager, ensure you are in the Root Directory (usually /home/your_username/), which is one level above public_html.
+
+Create a new folder here and name it something like laravel_app.
+
+Enter laravel_app and upload laravel-core.zip.
+
+Right-click laravel-core.zip and select Extract.
+
+Step 2: Upload the Public Files
+Navigate into the native public_html directory of your cPanel.
+
+Upload laravel-public.zip directly into public_html and Extract it. Your public_html folder should now house index.php, .htaccess, and your assets.
+
+STAGE 4: Link the Core and Public Files
+Because we split the files, public_html/index.php won't know where to find the core Laravel code. We need to fix the paths.
+
+In the cPanel File Manager, go to public_html and right-click index.php -> Edit.
+
+Look for the following lines (around lines 34 and 47 depending on your Laravel version) and update them to point to your new laravel_app folder
+
+// Change this line:
+require __DIR__.'/../vendor/autoload.php';
+// To this (replace 'your_username'):
+require __DIR__.'/../laravel_app/vendor/autoload.php';
+
+// Change this line:
+$app = require_once __DIR__.'/../bootstrap/app.php';
+// To this:
+$app = require_once __DIR__.'/../laravel_app/bootstrap/app.php';
+
+
+STAGE 5: Configure the .env & SQLite Path
+Go to your laravel_app folder.
+
+Right-click .env -> Edit.
+
+Update your application settings and direct your database connection to the absolute cPanel path of your SQLite file:
+
+APP_ENV=production
+APP_DEBUG=false
+APP_URL= insert the production URL here
+
+DB_CONNECTION=sqlite
+DB_DATABASE=/home/your_username/laravel_app/database/database.sqlite
+ And also update other environmental variables files for resend and Paytsack
+
+STAGE 6: Fix Permissions
+Laravel needs permission to write to its storage logs and database.
+
+Inside laravel_app, right-click the storage folder and select Change Permissions. Set it to 775 or 755. Do the same for the bootstrap/cache folder.
+
+Go to laravel_app/database, right-click your database.sqlite file, select Change Permissions, and ensure it is writable (usually 664 or 644).
